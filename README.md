@@ -8,7 +8,7 @@ The vcf and json file resulting from ExpansionHunter version 5.
 
 ## Usage
 
-python EHoutput_parse.py -s $sample -j $sample.json -v $sample.vcf -o $sample.tsv
+`python EHoutput_parse.py -s $sample -j $sample.json -v $sample.vcf -o $sample.tsv`
 with python 3.11.8 or higher and python modules json, io, pandas, argparse, logging and math.
 Arguments are:
 - `-s <arg>` name of the sample
