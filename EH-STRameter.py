@@ -232,15 +232,23 @@ def setGenotype_to_NA(swap):
         "FlankingReads_min": "NA", "IRRs_max": "NA", "IRRs_min": "NA", "OnlyIRR": "NA",
         "Consist_just_max": "NA", "Consist_just_min": "NA", "Consist_both": "NA", 
         "Consist_other": "NA", "Nonconsist": "NA", "AlleleDepth_max": "NA",
-        "AlleleDepth_min": "NA", "OnlyIRR": "NA"
+        "AlleleDepth_min": "NA", "Missing": 2, "Missing_max": 1, "Missing_min": 1,
+        "OffAllelicDepth_max": "NA", "OffAllelicDepth_min": "NA", "OffAllelicDepth": "NA",
+        "FLL_max": "NA", "FLL_min": "NA", "FragmentLengthLimited": "NA",
+        "Flanking_max": "NA", "Flanking_min": "NA", "IfFlanking": "NA",
+        "J1C_max": "NA", "J1C_min": "NA", "J1C": "NA",
+        "LCTNC_max": "NA", "LCTNC_min": "NA", "LCTNC": "NA",
+        "CIratio_max": "NA", "CIratio_min": "NA", "CIratio": "NA",
+        "Qcon_max": "NA", "Qcon_min": "NA", "Qnon": "NA", "Qci_max": "NA",
+        "Qci_min": "NA", "Qdepth_max": "NA", "Qdepth_min": "NA"
     })
 
 def calculate_missing(RepeatNr_max, RepeatNr_min, Genotype):
     """Returns the sum of missing values (1 if missing, 0 otherwise), 
     considering RepeatNr_min only if Genotype is 'Het' or 'Hom'
     """
-    missing_max = int(RepeatNr_max == "NA")
-    missing_min = int(RepeatNr_min == "NA" and Genotype in ["Het", "Hom"])
+    missing_max = int(RepeatNr_max == "NA" or RepeatNr_max == ".")
+    missing_min = int((RepeatNr_min == "NA" or RepeatNr_min == ".") and Genotype in ["Het", "Hom"])
     return missing_max + missing_min
 
 def calculate_off_allelic_depth(allele_depth, read_depth, missing):
