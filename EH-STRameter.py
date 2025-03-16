@@ -449,11 +449,29 @@ def merge_json_vcf(line_info):
 
     # Qci
     if swap["RepeatNr_max"] != 'NA':
-        swap["Qci_max"] = round(1/math.exp(4*(int(swap["CI_max_2"]) - int(swap["CI_max_1"]))/swap["RepeatNr_max"]), 2)
+        swap["RepeatNr_max"] = int(swap["RepeatNr_max"])
+        if swap["RepeatNr_max"] == 0:
+            RepeatNrmax = swap["RepeatNr_max"] + 1
+        else:
+            RepeatNrmax = swap["RepeatNr_max"]
+        exp_input = 4*(int(swap["CI_max_2"]) - int(swap["CI_max_1"]))/RepeatNrmax
+        if exp_input > 709:  # math.exp(709) is the largest value allowed
+            swap["Qci_max"] = 0
+        else:
+            swap["Qci_max"] = round(1/math.exp(exp_input), 2)
     else:
         swap["Qci_max"] = 'NA'
     if swap["RepeatNr_min"] != 'NA':
-        swap["Qci_min"] = round(1/math.exp(4*(int(swap["CI_min_2"]) - int(swap["CI_min_1"]))/swap["RepeatNr_min"]), 2)
+        swap["RepeatNr_min"] = int(swap["RepeatNr_min"])
+        if swap["RepeatNr_min"] == 0:
+            RepeatNrmin = swap["RepeatNr_min"] + 1
+        else:
+            RepeatNrmin = swap["RepeatNr_min"]
+        exp_input = 4*(int(swap["CI_min_2"]) - int(swap["CI_min_1"]))/RepeatNrmin
+        if exp_input > 709:  # math.exp(709) is the largest value allowed
+            swap["Qci_min"] = 0
+        else:
+            swap["Qci_min"] = round(1/math.exp(exp_input), 2)
     else:
         swap["Qci_min"] = 'NA'
 
