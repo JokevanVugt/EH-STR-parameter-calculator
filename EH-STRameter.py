@@ -294,7 +294,7 @@ def calculate_LCTNC(consist_both, consist_one, nonconsist, missing, genotype):
     )
 
 def calculate_CIratio(repeatnr, CI_1, CI_2, missing):
-    """Returns 1 if less consistent than nonconsistent reads, otherwise 0"""
+    """Returns 1 if delta CI is larger than repeat number, otherwise 0"""
     if repeatnr in [None, "NA"]:
         CI_2 == 1 and CI_1 == 1 and repeatnr == 1
     return int((int(CI_2) - int(CI_1)) > int(repeatnr) and missing == 0)
